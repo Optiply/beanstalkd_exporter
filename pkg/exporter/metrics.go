@@ -42,20 +42,21 @@ var descSystemMetrics = map[string]struct {
 }
 
 var descTubeMetrics = map[string]struct {
-	stat string
-	help string
+	stat            string
+	help            string
+	default_to_zero bool
 }{
-	"tube_cmd_delete_total":              {stat: "cmd-delete", help: "The cumulative number of delete commands for this tube."},
-	"tube_cmd_pause_tube_total":          {stat: "cmd-pause-tube", help: "The cumulative number of pause-tube commands for this tube."},
-	"tube_current_jobs_buried_count":     {stat: "current-jobs-buried", help: "The number of buried jobs for this tube."},
-	"tube_current_jobs_delayed_count":    {stat: "current-jobs-delayed", help: "The number of delayed jobs for this tube."},
-	"tube_current_jobs_ready_count":      {stat: "current-jobs-ready", help: "The number of jobs in the ready queue for this tube."},
-	"tube_current_jobs_reserved_count":   {stat: "current-jobs-reserved", help: "The number of jobs reserved by all clients for this tube."},
-	"tube_current_jobs_urgent_count":     {stat: "current-jobs-urgent", help: "The number of ready jobs with priority < 1024 for this tube."},
-	"tube_current_using_count":           {stat: "current-using", help: "The number of open connections that are currently using this tube."},
-	"tube_current_waiting_count":         {stat: "current-waiting", help: "The number of open connections that have issued a reserve command for this tube but not yet received a response."},
-	"tube_current_watching_count":        {stat: "current-watching", help: "The number of open connections that are currently watching this tube."},
-	"tube_pause_seconds_total":           {stat: "pause", help: "The number of seconds this tube has been paused for."},
-	"tube_pause_time_left_seconds_total": {stat: "pause-time-left", help: "The number of seconds until this tube is un-paused"},
-	"tube_total_jobs_count":              {stat: "total-jobs", help: "The cumulative count of jobs created for this tube in the current beanstalkd process."},
+	"tube_cmd_delete_total":              {stat: "cmd-delete", help: "The cumulative number of delete commands for this tube.", default_to_zero: false},
+	"tube_cmd_pause_tube_total":          {stat: "cmd-pause-tube", help: "The cumulative number of pause-tube commands for this tube.", default_to_zero: false},
+	"tube_current_jobs_buried_count":     {stat: "current-jobs-buried", help: "The number of buried jobs for this tube.", default_to_zero: true},
+	"tube_current_jobs_delayed_count":    {stat: "current-jobs-delayed", help: "The number of delayed jobs for this tube.", default_to_zero: true},
+	"tube_current_jobs_ready_count":      {stat: "current-jobs-ready", help: "The number of jobs in the ready queue for this tube.", default_to_zero: true},
+	"tube_current_jobs_reserved_count":   {stat: "current-jobs-reserved", help: "The number of jobs reserved by all clients for this tube.", default_to_zero: true},
+	"tube_current_jobs_urgent_count":     {stat: "current-jobs-urgent", help: "The number of ready jobs with priority < 1024 for this tube.", default_to_zero: true},
+	"tube_current_using_count":           {stat: "current-using", help: "The number of open connections that are currently using this tube.", default_to_zero: true},
+	"tube_current_waiting_count":         {stat: "current-waiting", help: "The number of open connections that have issued a reserve command for this tube but not yet received a response.", default_to_zero: true},
+	"tube_current_watching_count":        {stat: "current-watching", help: "The number of open connections that are currently watching this tube.", default_to_zero: true},
+	"tube_pause_seconds_total":           {stat: "pause", help: "The number of seconds this tube has been paused for.", default_to_zero: false},
+	"tube_pause_time_left_seconds_total": {stat: "pause-time-left", help: "The number of seconds until this tube is un-paused", default_to_zero: false},
+	"tube_total_jobs_count":              {stat: "total-jobs", help: "The cumulative count of jobs created for this tube in the current beanstalkd process.", default_to_zero: false},
 }

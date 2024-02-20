@@ -162,6 +162,7 @@ func (b *BeanstalkdCollector) Collect(ch chan<- prometheus.Metric) {
 	defer b.mutex.Unlock()
 
 	b.resetMetrics()
+	b.setDefaultToZeroMetrics()
 	b.scrape()
 
 	b.up.Collect(ch)
@@ -178,6 +179,27 @@ func (b *BeanstalkdCollector) resetMetrics() {
 	for _, m := range b.tubesMetrics {
 		m.Reset()
 	}
+}
+
+// Reset all tube metrics to 0 to prevent tubes not having metrics during scrape.
+func (b *BeanstalkdCollector) setDefaultToZeroMetrics() (err error) {
+	var tubeNames []string
+	tubeNames, err = b.getTubesToScrape()
+	if err != nil {
+		return
+	}
+
+	for _, v := range descTubeMetrics {
+		if !v.default_to_zero {
+			continue
+		}
+		if _, ok := b.tubesMetrics[v.stat]; ok {
+			for _, tube := range tubeNames {
+				b.tubesMetrics[v.stat].WithLabelValues(tube).Set(0)
+			}
+		}
+	}
+	return
 }
 
 func (b *BeanstalkdCollector) scrape() {
